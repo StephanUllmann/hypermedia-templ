@@ -1,0 +1,19 @@
+package templates
+
+import "github.com/StephanUllmann/hypermedia-templ/model"
+import "fmt"
+
+templ Contact(contact models.Contact) {
+  @Layout(fmt.Sprintf("%s %s", contact.First, contact.Last)) {
+    <div>
+                <span>{ contact.First	 }</span>
+                <span>{ contact.Last }</span>
+                <span>{ contact.Phone }</span>
+                <span>{ contact.Email }</span>
+                // <span><a href="/contacts/{ contact.Id }/edit">Edit</a>
+                    // <a href="/contacts/{ contact.Id }">View</a></span>
+                <span><a href={templ.SafeURL(fmt.Sprintf("/contacts/%v/edit", contact.ID))}>Edit</a>
+                    <a href="/contacts/">All</a></span>
+            </div>
+  }
+}
