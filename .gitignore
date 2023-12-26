@@ -1,2 +1,3 @@
-tmp/
 *.exe
+/tmp
+tmp/main.exe

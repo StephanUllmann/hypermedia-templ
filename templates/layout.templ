@@ -1,0 +1,38 @@
+package templates
+
+templ Layout(title string) {
+  <!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+      <style>
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+        body {
+          font-family: system-ui, sans-serif;
+          color-scheme: dark only;
+          background-color: black;
+          color: whitesmoke;
+          min-height: 100dvh;
+        }
+        table {
+          margin: 2rem auto;
+        }
+        td {
+          border-spacing: 0.5rem 0.75rem;
+          padding: 3px 5px;
+        }
+      </style>
+
+      <title>{title}</title>
+    </head>
+    <body>
+      {children...}
+    </body>
+  </html>
+}
