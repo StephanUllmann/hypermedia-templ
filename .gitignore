@@ -1,3 +1,4 @@
 *.exe
 /tmp
 tmp/main.exe
+.env
