@@ -1,7 +1,9 @@
 package main
 
 import (
+	"log"
 	"net/http"
+	"os"
 
 	"github.com/StephanUllmann/hypermedia-templ/db"
 	"github.com/StephanUllmann/hypermedia-templ/routes"
@@ -31,5 +33,11 @@ func main() {
 
 	r.Mount("/contacts", routes.ContactsRouter())
 
-	http.ListenAndServe(":3000", r)
+	port := ":" + os.Getenv("PORT")
+ 
+	log.Println("Server started on port 3000")
+	err := http.ListenAndServe(port, r)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
