@@ -35,7 +35,6 @@ func main() {
 
 	port := ":" + os.Getenv("PORT")
  
-	http.ListenAndServe(":3000", r)
 	log.Println("Server started on port 3000")
 	err := http.ListenAndServe(port, r)
 	if err != nil {
