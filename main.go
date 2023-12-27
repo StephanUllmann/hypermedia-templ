@@ -23,6 +23,8 @@ func main() {
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
 
+	r.Get("/public/*", http.StripPrefix("/public/", http.FileServer(http.Dir("public"))).ServeHTTP)
+
 	r.Get("/", http.RedirectHandler("/contacts", http.StatusMovedPermanently).ServeHTTP)
 	r.Get("/contact", http.RedirectHandler("/contacts", http.StatusMovedPermanently).ServeHTTP)
 

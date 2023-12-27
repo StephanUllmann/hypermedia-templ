@@ -1,0 +1,62 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, sans-serif;
+  color-scheme: dark only;
+  background-color: black;
+  color: whitesmoke;
+  min-height: 100dvh;
+}
+
+table {
+  margin: 2rem auto;
+}
+
+td {
+  border-spacing: 0.5rem 0.75rem;
+  padding: 5px 7px;
+}
+
+.contact {
+  max-width: fit-content;
+  margin: 2rem auto;
+}
+
+form {
+  max-width: 500px;
+  margin: 2rem auto;
+}
+
+fieldset {
+  padding: 2rem 4.5rem;
+  border-radius: 4px;
+
+  p {
+    margin: 0.5rem 0;
+    display: flex;
+    justify-content: space-between;
+
+    input {
+      width: 70%;
+      padding: 3px 5px;
+    }
+  }
+}
+
+body > p {
+  text-align: center;
+}
+
+button {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+
+  fieldset & {
+    margin-top: 0.5rem;
+  }
+}
