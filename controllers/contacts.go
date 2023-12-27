@@ -41,10 +41,6 @@ func GetContacts(w http.ResponseWriter, r *http.Request) {
 		data = append(data, contact)
 	}
 
-	fmt.Printf("Data: %v\n", data)
-	// w.Write([]byte("Working"))
-	// templ.Handler(Layout("Contacts"))
-	// templates.Layout("Contacts").Render(r.Context(), w)
 	templates.Contacts(data).Render(r.Context(), w)
 }
 
@@ -56,8 +52,69 @@ func GetContact(w http.ResponseWriter, r *http.Request) {
 		case sql.ErrNoRows:
 			fmt.Println("No rows were returned!")
 		case nil:
+			fmt.Printf("Data: %v\n", data)
 			templates.Contact(data).Render(r.Context(), w)
 		default:
 			panic(err)
 		}
+}
+
+func GetNewContact(w http.ResponseWriter, r *http.Request) {
+	templates.NewContact(models.Contact{}).Render(r.Context(), w)
+}
+
+func PostNewContact(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+	contact := models.Contact{
+		First: r.FormValue("first"),
+		Last: r.FormValue("last"),
+		Email: r.FormValue("email"),
+		Phone: r.FormValue("phone"),
+}
+	_, err := db.DB.Exec("INSERT INTO contacts (first, last, email, phone) VALUES (?, ?, ?, ?)", contact.First, contact.Last, contact.Email, contact.Phone)
+	if err != nil {
+		fmt.Println(err)
+		templates.NewContact(models.Contact{}).Render(r.Context(), w)
+	}
+	http.Redirect(w, r, "/contacts", http.StatusSeeOther)
+}
+
+func GetEditContact(w http.ResponseWriter, r *http.Request) {
+	id := chi.URLParam(r, "id")
+	data := models.Contact{}
+	row := db.DB.QueryRow("SELECT * FROM contacts WHERE id = ?", id)
+	switch err := row.Scan(&data.ID, &data.First, &data.Last, &data.Phone, &data.Email); err {
+		case sql.ErrNoRows:
+			fmt.Println("No rows were returned!")
+		case nil:
+			templates.EditContact(data).Render(r.Context(), w)
+		default:
+			panic(err)
+		}
+}
+
+func PostEditContact(w http.ResponseWriter, r *http.Request) {
+	id := chi.URLParam(r, "id")
+	r.ParseForm()
+	contact := models.Contact{
+		First: r.FormValue("first"),
+		Last: r.FormValue("last"),
+		Email: r.FormValue("email"),
+		Phone: r.FormValue("phone"),
+	}
+	_, err := db.DB.Exec("UPDATE contacts SET first = ?, last = ?, email = ?, phone = ? WHERE id = ?", contact.First, contact.Last, contact.Email, contact.Phone, id)
+	if err != nil {
+		fmt.Println(err)
+		templates.EditContact(models.Contact{}).Render(r.Context(), w)
+	}
+	http.Redirect(w, r, fmt.Sprintf("/contacts/%v", id), http.StatusSeeOther)
+}
+
+func DeleteContact(w http.ResponseWriter, r *http.Request) {
+	id := chi.URLParam(r, "id")
+	_, err := db.DB.Exec("DELETE FROM contacts WHERE id = ?", id)
+	if err != nil {
+		fmt.Println(err)
+	}
+	http.Redirect(w, r, "/contacts", http.StatusSeeOther)
 }
