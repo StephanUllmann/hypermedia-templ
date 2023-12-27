@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -41,7 +40,6 @@ func main() {
 	r.Mount("/contacts", routes.ContactsRouter())
 
 	port := ":" + os.Getenv("PORT")
-	fmt.Printf("test: %v\n", os.Getenv("test"))
  
 	log.Printf("Server started on port %v\n", port)
 	err = http.ListenAndServe(port, r)
