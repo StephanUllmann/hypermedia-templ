@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -9,12 +10,18 @@ import (
 	"github.com/StephanUllmann/hypermedia-templ/routes"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"github.com/joho/godotenv"
 	_ "github.com/mattn/go-sqlite3"
 )
 
 
 
 func main() {
+
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
 
 	db.Init()
 	
@@ -34,9 +41,10 @@ func main() {
 	r.Mount("/contacts", routes.ContactsRouter())
 
 	port := ":" + os.Getenv("PORT")
+	fmt.Printf("test: %v\n", os.Getenv("test"))
  
 	log.Printf("Server started on port %v\n", port)
-	err := http.ListenAndServe(port, r)
+	err = http.ListenAndServe(port, r)
 	if err != nil {
 		log.Fatal(err)
 	}
