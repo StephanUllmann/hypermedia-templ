@@ -12,8 +12,8 @@ templ Contact(contact models.Contact) {
           <div>Email: {contact.Email}</div>
         </div>
         <p>
-          <a href={templ.SafeURL(fmt.Sprintf("/contacts/%v/edit", contact.ID))}>Edit</a>
-          <a href="/contacts/">Back</a>
+          <a href={templ.SafeURL(fmt.Sprintf("/contacts/%v/edit", contact.ID))} >Edit</a>
+          <a href="/contacts/" >Back</a>
         </p>
       </div>   
   }

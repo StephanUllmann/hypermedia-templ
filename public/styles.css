@@ -12,6 +12,12 @@ body {
   min-height: 100dvh;
 }
 
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 table {
   margin: 2rem auto;
 }
@@ -27,8 +33,8 @@ td {
 }
 
 form {
-  max-width: 500px;
-  margin: 2rem auto;
+  /* align-self: stretch; */
+  width: 700px;
 }
 
 fieldset {
@@ -36,18 +42,19 @@ fieldset {
   border-radius: 4px;
 
   p {
-    margin: 0.5rem 0;
+    position: relative;
+    margin: 1.25rem 0;
     display: flex;
     justify-content: space-between;
 
     input {
-      width: 70%;
+      width: 50%;
       padding: 3px 5px;
     }
   }
 }
 
-body > p {
+main > p {
   text-align: center;
 }
 
@@ -59,4 +66,68 @@ button {
   fieldset & {
     margin-top: 0.5rem;
   }
+
+  main & {
+    margin: 1rem auto;
+    text-align: center;
+  }
+}
+
+.error,
+fieldset > p > span,
+.success {
+  color: red;
+  font-size: 0.66rem;
+  margin: 0.5rem 0;
+  position: absolute;
+  bottom: -1rem;
+  left: 0;
+  width: 100%;
+  text-align: right;
+}
+.success {
+  color: green;
+}
+
+[popover]:popover-open {
+  opacity: 1;
+
+  &::backdrop {
+    backdrop-filter: blur(3px) grayscale(0.7);
+  }
+}
+
+[popover] {
+  inset: 50%;
+  transform: translate(-50%, -50%);
+  width: 30rem;
+  padding: 2rem 3.5rem;
+  border-radius: 10px;
+  box-sizing: border-box;
+  transition-property: opacity, overlay, display;
+  transition-duration: 250ms;
+  transition-timing-function: cubic-bezier(0.56, 0.03, 0.58, 1.42);
+  transition-behavior: allow-discrete;
+  opacity: 0;
+
+  &::backdrop {
+    backdrop-filter: blur(0) grayscale(1);
+    transition: all 250ms cubic-bezier(0.56, 0.03, 0.58, 1.42);
+  }
+}
+
+@starting-style {
+  [popover]:popover-open {
+    opacity: 0;
+  }
+
+  [popover]::backdrop {
+    backdrop-filter: blur(0) grayscale(0);
+  }
+}
+
+.pagination {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
 }

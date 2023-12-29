@@ -5,37 +5,26 @@ import "fmt"
 
 templ EditContact(contact models.Contact) {
   @Layout(fmt.Sprintf("Edit %s", contact.First)) {
-        <form action={templ.SafeURL(fmt.Sprintf("/contacts/%v/edit", contact.ID))} method="post">
-          <fieldset>
-              <legend>Contact Values</legend>
-                  <p>
-                    <label for="first_name">First Name</label>
-                    <input name="first" id="first_name" type="text" placeholder="First Name"
-                          value={contact.First}/>
-                </p>
-                <p>
-                    <label for="last_name">Last Name</label>
-                    <input name="last" id="last_name" type="text" placeholder="Last Name"
-                          value={contact.Last}/>
-                </p>
-                <p>
-                    <label for="phone">Phone</label>
-                    <input name="phone" id="phone" type="text" placeholder="Phone" value={contact.Phone}/>
-                </p>
-                <p>
-                    <label for="email">Email</label>
-                    <input name="email" id="email" type="text" placeholder="Email" value={contact.Email}/>
-                </p>
-              <button>Save</button>
-          </fieldset>
+        <form action={templ.SafeURL(fmt.Sprintf("/contacts/%v/edit", contact.ID))} method="post" >
+          @FieldsetContact(contact)
       </form>
       
-      <form action={templ.SafeURL(fmt.Sprintf("/contacts/%v/delete", contact.ID))} method="post">
-        <button>Delete Contact</button>
-      </form>
+      <button popovertarget={fmt.Sprintf("delete-%v", contact.ID)} >
+              Delete Contact
+      </button>
+
+      <div popover id={fmt.Sprintf("delete-%v", contact.ID)}>
+        <p>Really delete {contact.First} {contact.Last}?</p>
+        <button hx-delete={fmt.Sprintf("/contacts/%v", contact.ID)} 
+                hx-target="body"
+                hx-push-url="true">
+                Confirm
+        </button>
+        <button popovertarget={fmt.Sprintf("delete-%v", contact.ID)} popovertargetaction="hide" >Cancel</button>
+      </div>
 
       <p>
-        <a href="/contacts/">Back</a>
+        <a href="/contacts" >Back</a>
       </p>
   }
 }
