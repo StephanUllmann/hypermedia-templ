@@ -15,5 +15,5 @@ The book's example backend is written in Python and Flask. This repo is an attem
 Branch for [Chapter 3](https://github.com/bigskysoftware/hypermedia-systems/blob/main/book/CH03_BuildingASimpleWebApplication.adoc) is an example of an old style (Web 1.0) contacts app, entirely server-side rendered using Go.
 Deployed on Render: https://hypermedia-chapter3.onrender.com/
 
-Branch for [Chapter 5](https://github.com/bigskysoftware/hypermedia-systems/blob/main/book/CH05_htmxPatterns.adoc) includes htmx patters like hx-boost for swapping the content of the html body only, hx-get/post/delete on issuing AJAX requests on click, chang and keyup events, debouncing, selected swapping on a target.
+Branch for [Chapter 5](https://github.com/bigskysoftware/hypermedia-systems/blob/main/book/CH05_htmxPatterns.adoc) includes htmx patters like hx-boost for swapping the content of the html body only, hx-get/post/delete on issuing AJAX requests on click, change and keyup events, debouncing, selected swapping on a target, pagination, click to load and infinite scroll.
 [Deployed on Render](https://hypermedia-chapter5.onrender.com): https://hypermedia-chapter5.onrender.com
