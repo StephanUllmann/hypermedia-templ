@@ -9,7 +9,8 @@ import (
 	"github.com/StephanUllmann/hypermedia-templ/routes"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
-	"github.com/joho/godotenv"
+
+	// "github.com/joho/godotenv"
 	_ "github.com/mattn/go-sqlite3"
 )
 
