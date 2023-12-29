@@ -5,31 +5,12 @@ import "github.com/StephanUllmann/hypermedia-templ/model"
 
 templ NewContact(contact models.Contact) {
   @Layout("New Contact") {
-  <form action="/contacts/new" method="post">
-    <fieldset>
-        <legend>Contact Values</legend>
-         <p>
-            <label for="first_name">First Name</label>
-            <input name="first" id="first_name" type="text" placeholder="First Name" value={contact.First}/>
-        </p>
-        <p>
-            <label for="last_name">Last Name</label>
-            <input name="last" id="last_name" type="text" placeholder="Last Name" value={contact.Last}/>
-        </p>
-        <p>
-            <label for="phone">Phone</label>
-            <input name="phone" id="phone" type="text" placeholder="Phone" value={contact.Phone}/>
-        </p>
-        <p>
-            <label for="email">Email</label>
-            <input name="email" id="email" type="email" placeholder="Email" value={contact.Email}/>
-        </p>
-        <button>Save</button>
-    </fieldset>
-</form>
+    <form action="/contacts/new" method="post">
+        @FieldsetContact(contact)
+    </form>
 
-<p>
-    <a href="/contacts">Back</a>
-</p>
+    <p>
+        <a href="/contacts">Back</a>
+    </p>
 }
 }

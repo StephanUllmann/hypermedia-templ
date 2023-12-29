@@ -1,0 +1,36 @@
+package templates
+
+import "github.com/StephanUllmann/hypermedia-templ/model"
+
+templ FieldsetContact(contact models.Contact) {
+  <fieldset>
+    <legend>Contact Values</legend>
+      <p>
+          <label for="first_name">First Name</label>
+          <input name="first" id="first_name" type="text" placeholder="First Name"
+                value={contact.First}/>
+          <span>{""}</span>
+      </p>
+      <p>
+          <label for="last_name">Last Name</label>
+          <input name="last" id="last_name" type="text" placeholder="Last Name"
+                value={contact.Last}/>
+          <span>{""}</span>
+      </p>
+      <p>
+          <label for="phone">Phone</label>
+          <input name="phone" id="phone" type="text" placeholder="Phone" value={contact.Phone}/>
+          <span>{""}</span>
+      </p>
+      <p>
+          <label for="email">Email</label>
+          <input name="email" id="email" type="text" placeholder="Email" value={contact.Email}
+                hx-get="/contacts/email" 
+                hx-trigger="change, keyup delay:750ms changed"
+                hx-target="next span"
+                />
+          <span>{""}</span>
+      </p>
+    <button>Save</button>
+  </fieldset>
+}

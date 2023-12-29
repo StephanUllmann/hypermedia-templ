@@ -40,8 +40,8 @@ func main() {
 	r.Mount("/contacts", routes.ContactsRouter())
 
 	port := ":" + os.Getenv("PORT")
- 
 	log.Printf("Server started on port %v\n", port)
+
 	err = http.ListenAndServe(port, r)
 	if err != nil {
 		log.Fatal(err)

@@ -22,7 +22,10 @@ func ContactsRouter() chi.Router {
 		r.Post("/{id}/edit", controllers.PostEditContact)
 
 		// deleting contacts
-		r.Post("/{id}/delete", controllers.DeleteContact)
+		r.Delete("/{id}", controllers.DeleteContact)
+
+		// validating email
+		r.Get("/email", controllers.ValidateEmail)
 
 	return r
 }
