@@ -48,8 +48,13 @@ func GetContacts(w http.ResponseWriter, r *http.Request) {
 		}
 		data = append(data, contact)
 	}
+	trigger := r.Header.Get("Hx-Trigger")
+	if trigger == "search" {
+		templates.Rows(data, page).Render(r.Context(), w)
+	} else {
+		templates.Contacts(data, q, page).Render(r.Context(), w)
+	}
 	
-	templates.Contacts(data, page).Render(r.Context(), w)
 }
 
 func GetContact(w http.ResponseWriter, r *http.Request) {

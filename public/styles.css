@@ -131,3 +131,24 @@ fieldset > p > span,
   gap: 1rem;
   margin-bottom: 1rem;
 }
+
+.htmx-indicator {
+  opacity: 0;
+  transition: opacity 50ms;
+}
+.htmx-request .htmx-indicator {
+  opacity: 1;
+}
+.htmx-request.htmx-indicator {
+  opacity: 1;
+}
+
+#spinner {
+  position: absolute;
+  left: 1rem;
+  top: 3px;
+}
+
+form:has(#spinner) {
+  position: relative;
+}

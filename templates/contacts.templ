@@ -1,17 +1,26 @@
 package templates
 
 import "github.com/StephanUllmann/hypermedia-templ/model"
-import "fmt"
+// import "fmt"
 
-templ Contacts(contacts []models.Contact, page int) {
+templ Contacts(contacts []models.Contact, query string, page int) {
   @Layout("Contacts"){
     <header>
         <search>
             <form action="/contacts" method="GET">
-                <input type="text" name="q" placeholder="Search" hx-get="/contacts" hx-trigger="change, keyup delay:500ms changed" hx-target="tbody" hx-select="tbody tr" />
+                <input type="text" name="q" placeholder="Search" id="search"
+                    value={query}
+                    hx-get="/contacts" 
+                    hx-trigger="search, keyup delay:500ms changed" 
+                    hx-target="tbody"  
+                    hx-select="tbody tr"
+                    hx-push-url="true" 
+                    hx-indicator="#spinner"/>
+                <img id="spinner" class="htmx-indicator" src="/public/loading-spinner.svg" alt="Request In Flight..."/>
                 <input type="submit" value="Search" />
             </form>
         </search>
+        // <h2 id="spinner" class="htmx-indicator">Loading...</h2>
     </header>
       <table>
         <thead>
@@ -20,43 +29,7 @@ templ Contacts(contacts []models.Contact, page int) {
         </tr>
         </thead>
         <tbody>
-        for _, contact := range contacts {
-            <tr>
-                <td>{ contact.First	 }</td>
-                <td>{ contact.Last }</td>
-                <td>{ contact.Phone }</td>
-                <td>{ contact.Email }</td>
-                <td><a href={templ.SafeURL(fmt.Sprintf("/contacts/%v/edit", contact.ID))} >Edit</a>
-                    <a href={templ.SafeURL(fmt.Sprintf("/contacts/%v", contact.ID))} >View</a></td>
-            </tr>
-             }
-            // Click to Load
-            // if len(contacts) == 10 {
-            //     <tr>
-            //         <td colspan="5" style="text-align: center">
-            //             <button hx-target="closest tr"
-            //                     hx-swap="outerHTML"
-            //                     hx-select="tbody > tr"
-            //                     hx-get={fmt.Sprintf("/contacts?page=%d", page + 1)}
-            //                     >
-            //                 Load More
-            //             </button>
-            //         </td>
-            //     </tr>              
-            // }
-
-            // Infinite Scroll
-            if len(contacts) == 10 {
-                <tr>
-                    <td colspan="5" style="text-align: center">
-                        <span hx-target="closest tr"
-                            hx-trigger="revealed"
-                            hx-swap="outerHTML"
-                            hx-select="tbody > tr"
-                            hx-get={fmt.Sprintf("/contacts?page=%d", page + 1)}>Loading More...</span>
-                    </td>
-                </tr>
-            }
+            @Rows(contacts, page)
         </tbody>
     </table>
 
