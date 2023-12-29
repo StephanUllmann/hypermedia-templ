@@ -17,10 +17,10 @@ import (
 
 func main() {
 
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
+	// err := godotenv.Load()
+	// if err != nil {
+	// 	log.Fatal("Error loading .env file")
+	// }
 
 	db.Init()
 	
@@ -42,7 +42,7 @@ func main() {
 	port := ":" + os.Getenv("PORT")
 	log.Printf("Server started on port %v\n", port)
 
-	err = http.ListenAndServe(port, r)
+	err := http.ListenAndServe(port, r)
 	if err != nil {
 		log.Fatal(err)
 	}
