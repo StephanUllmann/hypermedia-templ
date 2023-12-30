@@ -17,7 +17,8 @@ templ EditContact(contact models.Contact) {
         <p>Really delete {contact.First} {contact.Last}?</p>
         <button hx-delete={fmt.Sprintf("/contacts/%v", contact.ID)} 
                 hx-target="body"
-                hx-push-url="true">
+                hx-push-url="true"
+                id="delete-btn">
                 Confirm
         </button>
         <button popovertarget={fmt.Sprintf("delete-%v", contact.ID)} popovertargetaction="hide" >Cancel</button>

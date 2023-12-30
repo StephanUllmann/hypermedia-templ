@@ -18,8 +18,32 @@ main {
   align-items: center;
 }
 
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.add-contact {
+  width: 14rem;
+  display: block;
+
+  img {
+    transform: translate(0.5rem, 4px);
+    height: 15px;
+  }
+}
+
 table {
   margin: 2rem auto;
+}
+
+tr.htmx-swapping {
+  opacity: 0;
+  /* height: 0; */
+  /* font-size: 0px; */
+  transform: scaleY(0%);
+  transition: all 1000ms ease-out;
 }
 
 td {
@@ -130,4 +154,25 @@ fieldset > p > span,
   display: flex;
   gap: 1rem;
   margin-bottom: 1rem;
+}
+
+.htmx-indicator {
+  opacity: 0;
+  transition: opacity 50ms;
+}
+.htmx-request .htmx-indicator {
+  opacity: 1;
+}
+.htmx-request.htmx-indicator {
+  opacity: 1;
+}
+
+#spinner {
+  position: absolute;
+  left: 1rem;
+  top: 3px;
+}
+
+form:has(#spinner) {
+  position: relative;
 }
