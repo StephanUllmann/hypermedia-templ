@@ -17,3 +17,5 @@ Deployed on Render: https://hypermedia-chapter3.onrender.com/
 
 Branch for [Chapter 5](https://github.com/bigskysoftware/hypermedia-systems/blob/main/book/CH05_htmxPatterns.adoc) includes htmx patters like hx-boost for swapping the content of the html body only, hx-get/post/delete on issuing AJAX requests on click, change and keyup events, debouncing, selected swapping on a target, pagination, click to load and infinite scroll.
 Deployed on Render: https://hypermedia-chapter5.onrender.com
+
+Branch for [Chapter 6](https://github.com/bigskysoftware/hypermedia-systems/blob/main/book/CH06_MorehtmxPatterns.adoc) adds Active Search, single inline deletion of entries with swapping out the deleted content and bulk deletion.

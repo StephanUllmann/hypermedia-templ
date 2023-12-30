@@ -3,9 +3,12 @@ package controllers
 import (
 	"database/sql"
 	"fmt"
+	"io"
 	"net/http"
 	"net/mail"
 	"strconv"
+	"strings"
+	"time"
 
 	"github.com/StephanUllmann/hypermedia-templ/db"
 	models "github.com/StephanUllmann/hypermedia-templ/model"
@@ -54,6 +57,22 @@ func GetContacts(w http.ResponseWriter, r *http.Request) {
 	} else {
 		templates.Contacts(data, q, page).Render(r.Context(), w)
 	}
+}
+
+// For Lazy Loading Route
+func GetContactCount(w http.ResponseWriter, r *http.Request) {
+	time.Sleep(1 * time.Second) // simulate slow response (for demo purposes only!
+	var count int
+	row := db.DB.QueryRow("SELECT COUNT(*) FROM contacts;")
+	switch err := row.Scan(&count); err {
+	case sql.ErrNoRows:
+		fmt.Println("No rows were returned!")
+	case nil:
+		w.Write([]byte(fmt.Sprintf("(%v total Contacts)", count)))
+	default:
+		panic(err)
+	}
+
 	
 }
 
@@ -130,8 +149,44 @@ func DeleteContact(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Println(err)
 	}
+	if r.Header.Get("Hx-Trigger") == "delete-btn" {
+		http.Redirect(w, r, "/contacts", http.StatusSeeOther)
+	} else {
+		w.Write([]byte(""))
+	}
+}
+
+// The DeleteContacts function reads the selected contact IDs from the request body, constructs a SQL
+// query to delete the corresponding contacts from the database, and redirects the user to the contacts
+// page.
+func DeleteContacts(w http.ResponseWriter, r *http.Request) {
+	body, err := io.ReadAll(r.Body)
+    if err != nil {
+				fmt.Println(err)
+		}
+		pairs := strings.Split(string(body), "&")
+
+		var ids []string
+		for _, pair := range pairs {
+			parts := strings.Split(pair, "=")
+			if parts[0] == "selected_contact_ids" {
+				_, err = strconv.Atoi(parts[1]) 
+				if err == nil {
+					ids = append(ids, parts[1])
+				}
+			}
+		}
+		fmt.Printf("IDs: %v\n", ids)
+		query := "(" + strings.Join(ids, ", ") + ")"
+
+		_, err = db.DB.Exec("DELETE FROM contacts WHERE id IN " + query + ";")
+		if err != nil {
+			fmt.Println(err)
+		}
+
 	http.Redirect(w, r, "/contacts", http.StatusSeeOther)
 }
+
 
 func ValidateEmail(w http.ResponseWriter, r *http.Request) {
 	email := r.URL.Query().Get("email")

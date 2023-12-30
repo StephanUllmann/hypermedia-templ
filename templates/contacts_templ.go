@@ -41,20 +41,20 @@ func Contacts(contacts []models.Contact, query string, page int) templ.Component
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" hx-get=\"/contacts\" hx-trigger=\"search, keyup delay:500ms changed\" hx-target=\"tbody\" hx-select=\"tbody tr\" hx-push-url=\"true\" hx-indicator=\"#spinner\"> <img id=\"spinner\" class=\"htmx-indicator\" src=\"/public/loading-spinner.svg\" alt=\"Request In Flight...\"> <input type=\"submit\" value=\"Search\"></form></search></header><table><thead><tr><th>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" hx-get=\"/contacts\" hx-trigger=\"search, keyup delay:500ms changed\" hx-target=\"tbody\" hx-select=\"tbody tr\" hx-push-url=\"true\" hx-indicator=\"#spinner\"> <img id=\"spinner\" class=\"htmx-indicator\" src=\"/public/loading-spinner.svg\" alt=\"Request In Flight...\"> <input type=\"submit\" value=\"Search\"></form></search><p><a class=\"add-contact\" href=\"/contacts/new\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Var3 := `First`
+			templ_7745c5c3_Var3 := `Add Contact `
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var3)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</th><th>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<span hx-get=\"/contacts/count\" hx-trigger=\"load\"><img class=\"htmx-indicator\" src=\"/public/loading-spinner.svg\" alt=\"Request In Flight...\"></span></a></p></header><table><thead><tr><th></th><th>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Var4 := `Last`
+			templ_7745c5c3_Var4 := `First`
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var4)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
@@ -63,7 +63,7 @@ func Contacts(contacts []models.Contact, query string, page int) templ.Component
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Var5 := `Phone`
+			templ_7745c5c3_Var5 := `Last`
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var5)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
@@ -72,8 +72,17 @@ func Contacts(contacts []models.Contact, query string, page int) templ.Component
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Var6 := `Email`
+			templ_7745c5c3_Var6 := `Phone`
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var6)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</th><th>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Var7 := `Email`
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var7)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -85,16 +94,16 @@ func Contacts(contacts []models.Contact, query string, page int) templ.Component
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</tbody></table>          <p><a href=\"/contacts/new\">")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</tbody></table><button hx-delete=\"/contacts/bulk\" hx-confirm=\"Are you sure you want to delete these contacts?\" hx-target=\"body\" hx-include=\"[name=&#39;selected_contact_ids&#39;]\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Var7 := `Add Contact`
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var7)
+			templ_7745c5c3_Var8 := `Delete Selected Contacts`
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var8)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</a></p>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</button>         ")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

@@ -21,11 +21,15 @@ templ Contacts(contacts []models.Contact, query string, page int) {
             </form>
         </search>
         // <h2 id="spinner" class="htmx-indicator">Loading...</h2>
+        // Lazy loading
+     <p>
+        <a class="add-contact" href="/contacts/new" >Add Contact <span hx-get="/contacts/count" hx-trigger="load"><img  class="htmx-indicator" src="/public/loading-spinner.svg" alt="Request In Flight..."/></span></a>
+    </p>
     </header>
       <table>
         <thead>
         <tr>
-            <th>First</th> <th>Last</th> <th>Phone</th> <th>Email</th> <th></th>
+           <th></th> <th>First</th> <th>Last</th> <th>Phone</th> <th>Email</th> <th></th>
         </tr>
         </thead>
         <tbody>
@@ -33,6 +37,12 @@ templ Contacts(contacts []models.Contact, query string, page int) {
         </tbody>
     </table>
 
+    <button hx-delete="/contacts/bulk"
+            hx-confirm="Are you sure you want to delete these contacts?"
+            hx-target="body"
+            hx-include="[name='selected_contact_ids']">
+                Delete Selected Contacts
+    </button>
 // Pagination
     // <div class="pagination">
     //         if page > 1 {
@@ -44,8 +54,6 @@ templ Contacts(contacts []models.Contact, query string, page int) {
     //         }
     // </div>
 
-     <p>
-        <a href="/contacts/new" >Add Contact</a>
-    </p>
+
   }
 }

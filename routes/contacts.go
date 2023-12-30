@@ -23,9 +23,13 @@ func ContactsRouter() chi.Router {
 
 		// deleting contacts
 		r.Delete("/{id}", controllers.DeleteContact)
+		r.Delete("/bulk", controllers.DeleteContacts)
 
 		// validating email
 		r.Get("/email", controllers.ValidateEmail)
+
+		// Contact Count
+		r.Get("/count", controllers.GetContactCount)
 
 	return r
 }
