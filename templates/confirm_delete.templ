@@ -1,0 +1,23 @@
+package templates
+
+import "github.com/StephanUllmann/hypermedia-templ/model"
+import "fmt"
+
+templ ConfirmDelete(id string){
+   <div popover id="delete" hx-get={fmt.Sprintf("/contacts/confirm-delete-popover/%v", id)} hx-swap="innerHTML" hx-trigger="revealed">
+       
+    </div>
+}
+
+templ ConfirmDeletePopover(contact models.Contact){
+    <div>
+        <p>Really delete {contact.First} {contact.Last}?</p>
+        <button hx-delete={fmt.Sprintf("/contacts/%v", contact.ID)} 
+                hx-target={fmt.Sprintf("#row-%v", contact.ID)}
+                id="delete-popover"
+                popovertarget="delete" popovertargetaction="hide">
+                Confirm
+        </button>
+        <button popovertarget="delete" popovertargetaction="hide" >Cancel</button>
+    </div>
+}

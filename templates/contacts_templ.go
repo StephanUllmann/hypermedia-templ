@@ -12,9 +12,7 @@ import "bytes"
 
 import "github.com/StephanUllmann/hypermedia-templ/model"
 
-// import "fmt"
-
-func Contacts(contacts []models.Contact, query string, page int) templ.Component {
+func Contacts(contacts []models.Contact, query string, page int, archiverStatus string, archiverProgress float64, archiveProgressWidth templ.Attributes) templ.Component {
 	return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
 		if !templ_7745c5c3_IsBuffer {
@@ -103,7 +101,15 @@ func Contacts(contacts []models.Contact, query string, page int) templ.Component
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</button>         ")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</button>          ")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = Archive_UI(archiverStatus, archiverProgress, archiveProgressWidth).Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" <div popover id=\"delete\"></div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

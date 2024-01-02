@@ -5,7 +5,7 @@ import "fmt"
 
 templ Rows(contacts []models.Contact, page int) {
   for _, contact := range contacts {
-            <tr>
+            <tr id={fmt.Sprintf("row-%v", contact.ID)}>
                 <td><input type="checkbox" name="selected_contact_ids" value={ fmt.Sprintf("%d",contact.ID) }/></td>
                 <td>{ contact.First	 }</td>
                 <td>{ contact.Last }</td>
@@ -13,11 +13,13 @@ templ Rows(contacts []models.Contact, page int) {
                 <td>{ contact.Email }</td>
                 <td><a href={templ.SafeURL(fmt.Sprintf("/contacts/%v/edit", contact.ID))} >Edit</a>
                     <a href={templ.SafeURL(fmt.Sprintf("/contacts/%v", contact.ID))} >View</a>
-                    <a href="#" hx-delete={fmt.Sprintf("/contacts/%v", contact.ID)}
-                        hx-confirm="Are you sure you want to delete this contact?"
-                        hx-swap="outerHTML swap:1s"
-                        hx-target="closest tr">Delete
-                        </a>
+                    <button class="inline-delete-btn"  hx-get={fmt.Sprintf("/contacts/confirm-delete-popover/%v", contact.ID)} hx-target="#delete" hx-swap="innerHTML" popovertarget="delete" popovertargetaction="show">Delete
+                        </button>
+                    // <a href="#" hx-delete={fmt.Sprintf("/contacts/%v", contact.ID)}
+                    //     hx-confirm="Are you sure you want to delete this contact?"
+                    //     hx-swap="outerHTML swap:1s"
+                    //     hx-target="closest tr">Delete
+                    //     </a>
                 </td>
             </tr>
              }

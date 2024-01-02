@@ -1,9 +1,9 @@
 package templates
 
 import "github.com/StephanUllmann/hypermedia-templ/model"
-// import "fmt"
 
-templ Contacts(contacts []models.Contact, query string, page int) {
+
+templ Contacts(contacts []models.Contact, query string, page int, archiverStatus string, archiverProgress float64, archiveProgressWidth templ.Attributes) {
   @Layout("Contacts"){
     <header>
         <search>
@@ -25,6 +25,8 @@ templ Contacts(contacts []models.Contact, query string, page int) {
      <p>
         <a class="add-contact" href="/contacts/new" >Add Contact <span hx-get="/contacts/count" hx-trigger="load"><img  class="htmx-indicator" src="/public/loading-spinner.svg" alt="Request In Flight..."/></span></a>
     </p>
+
+
     </header>
       <table>
         <thead>
@@ -54,6 +56,11 @@ templ Contacts(contacts []models.Contact, query string, page int) {
     //         }
     // </div>
 
+    @Archive_UI(archiverStatus, archiverProgress, archiveProgressWidth)
+
+    <div popover id="delete">
+       
+    </div>
 
   }
 }
