@@ -28,6 +28,20 @@ templ Contacts(contacts []models.Contact, query string, page int, archiverStatus
 
 
     </header>
+    <form x-data="{ selected: [] }">
+        <div class="toolbar-wrapper">
+            <template x-if="selected.length > 0">
+                <div class="box info tool-bar">
+                    <slot x-text="selected.length"></slot>
+                    contacts selected
+                    <button type="button" class="bad bg color border"
+                     @click="confirm(`Delete ${selected.length} contacts?`) && 
+                         htmx.ajax('DELETE', '/contacts/bulk', { source: $root, target: document.body })">Delete</button>
+                    // <hr aria-orientation="vertical">
+                    <button type="button" @click="selected = []">Cancel</button>
+                </div>
+            </template>
+        </div>
       <table>
         <thead>
         <tr>
@@ -45,6 +59,7 @@ templ Contacts(contacts []models.Contact, query string, page int, archiverStatus
             hx-include="[name='selected_contact_ids']">
                 Delete Selected Contacts
     </button>
+    </form>
 // Pagination
     // <div class="pagination">
     //         if page > 1 {

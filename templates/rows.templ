@@ -6,7 +6,7 @@ import "fmt"
 templ Rows(contacts []models.Contact, page int) {
   for _, contact := range contacts {
             <tr id={fmt.Sprintf("row-%v", contact.ID)}>
-                <td><input type="checkbox" name="selected_contact_ids" value={ fmt.Sprintf("%d",contact.ID) }/></td>
+                <td><input type="checkbox" name="selected_contact_ids" value={ fmt.Sprintf("%d",contact.ID) } x-model="selected"/></td>
                 <td>{ contact.First	 }</td>
                 <td>{ contact.Last }</td>
                 <td>{ contact.Phone }</td>

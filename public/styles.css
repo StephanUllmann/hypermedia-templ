@@ -34,6 +34,15 @@ header {
   }
 }
 
+.toolbar-wrapper {
+  min-height: 2rem;
+  margin-top: 1rem;
+
+  & button {
+    margin: 0 0.5rem;
+  }
+}
+
 table {
   margin: 2rem auto;
 }
