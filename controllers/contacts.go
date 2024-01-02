@@ -13,8 +13,11 @@ import (
 	"github.com/StephanUllmann/hypermedia-templ/db"
 	models "github.com/StephanUllmann/hypermedia-templ/model"
 	"github.com/StephanUllmann/hypermedia-templ/templates"
+	"github.com/StephanUllmann/hypermedia-templ/utils"
+	"github.com/a-h/templ"
 	"github.com/go-chi/chi/v5"
 )
+
 
 func GetContacts(w http.ResponseWriter, r *http.Request) {
 	q := r.URL.Query().Get("q")
@@ -51,11 +54,19 @@ func GetContacts(w http.ResponseWriter, r *http.Request) {
 		}
 		data = append(data, contact)
 	}
+
+	
+
 	trigger := r.Header.Get("Hx-Trigger")
 	if trigger == "search" {
 		templates.Rows(data, page).Render(r.Context(), w)
 	} else {
-		templates.Contacts(data, q, page).Render(r.Context(), w)
+		utils.A.Init()
+		progressWidth := "width:0%;"
+		archiveProgressWidth := templ.Attributes{"style": progressWidth }
+		archiverStatus := utils.A.GetStatus()
+		archiverProgress := utils.A.GetProgress()
+		templates.Contacts(data, q, page, archiverStatus, archiverProgress, archiveProgressWidth).Render(r.Context(), w)
 	}
 }
 
@@ -207,4 +218,45 @@ func ValidateEmail(w http.ResponseWriter, r *http.Request) {
 				panic(err)
 	}	
 }
+}
+
+func ArchiveContacts(w http.ResponseWriter, r *http.Request) {
+	utils.A.Run()
+	progressWidth := "width:0%;"
+	archiveProgressWidth := templ.Attributes{"style": progressWidth }
+	archiverStatus := utils.A.GetStatus()
+	archiverProgress := utils.A.GetProgress()
+	fmt.Printf("Archiver Status: %v\n", archiverStatus)
+	templates.Archive_UI(archiverStatus, archiverProgress, archiveProgressWidth).Render(r.Context(), w)
+}
+
+func ArchiveCheck(w http.ResponseWriter, r *http.Request) {
+	archiverProgress := utils.A.GetProgress()
+	archiverStatus := utils.A.GetStatus()
+	progressWidth := fmt.Sprintf("width:%v%%;", archiverProgress*100)
+	archiveProgressWidth := templ.Attributes{"style": progressWidth }
+	templates.Archive_UI(archiverStatus, archiverProgress, archiveProgressWidth).Render(r.Context(), w)
+}
+
+func ArchiveDownload(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Disposition", "attachment; filename=contacts.json")
+	w.Header().Set("Content-Type", r.Header.Get("Content-Type"))
+	utils.A.Init()
+	http.ServeFile(w, r, "public/contacts.json")
+}
+
+
+func ConfirmDeleteContactPopover(w http.ResponseWriter, r *http.Request) {
+	id := chi.URLParam(r, "id")
+	
+	row := db.DB.QueryRow("SELECT * FROM contacts WHERE id = ?;", id)
+	data := models.Contact{}
+	switch err := row.Scan(&data.ID, &data.First, &data.Last, &data.Phone, &data.Email); err {
+		case sql.ErrNoRows:
+			fmt.Println("No rows were returned!")
+		case nil:
+			templates.ConfirmDeletePopover(data).Render(r.Context(), w)
+		default:
+			panic(err)
+	}
 }

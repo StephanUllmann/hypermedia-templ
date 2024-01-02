@@ -25,11 +25,21 @@ func ContactsRouter() chi.Router {
 		r.Delete("/{id}", controllers.DeleteContact)
 		r.Delete("/bulk", controllers.DeleteContacts)
 
+		// deletion popover
+		r.Get("/confirm-delete-popover/{id}", controllers.ConfirmDeleteContactPopover)
+
 		// validating email
 		r.Get("/email", controllers.ValidateEmail)
 
 		// Contact Count
 		r.Get("/count", controllers.GetContactCount)
+
+		// Archive
+		r.Post("/archive", controllers.ArchiveContacts)
+		r.Get("/archive", controllers.ArchiveCheck)
+		r.Get("/archive/file", controllers.ArchiveDownload)
+
+		
 
 	return r
 }
