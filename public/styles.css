@@ -49,6 +49,22 @@ tr.htmx-swapping {
 td {
   border-spacing: 0.5rem 0.75rem;
   padding: 5px 7px;
+
+  & > div > button {
+    margin: 0;
+  }
+}
+
+[data-overflow-menu] {
+  position: relative;
+}
+[role='menu'] {
+  position: absolute;
+  left: 107.5%;
+  top: 0;
+}
+[role='menu']:not([hidden]) {
+  display: flex;
 }
 
 .contact {
