@@ -21,3 +21,4 @@ Deployed on Render: https://hypermedia-chapter5.onrender.com
 Branch for [Chapter 6](https://github.com/bigskysoftware/hypermedia-systems/blob/main/book/CH06_MorehtmxPatterns.adoc) adds Active Search, single inline deletion of entries with swapping out the deleted content and bulk deletion.
 
 Branch for [Chapter 7](https://github.com/bigskysoftware/hypermedia-systems/blob/main/book/CH07_ADynamicArchiveUIWithhtmx.adoc) added a feature do download the full contacts archive as JSON file. It included a UI component for triggering the archiving, polling for a (mocked) progress of the archiving and at last swapping the progress bar again for a download link.
+Deployed on Render: https://hypermedia-chapter7.onrender.com
