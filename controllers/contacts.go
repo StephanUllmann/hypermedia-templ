@@ -180,7 +180,14 @@ func DeleteContacts(w http.ResponseWriter, r *http.Request) {
 		var ids []string
 		for _, pair := range pairs {
 			parts := strings.Split(pair, "=")
-			if parts[0] == "selected_contact_ids" {
+
+			var paramIsInt bool
+			_, err = strconv.Atoi(parts[0])
+			if err == nil {
+				paramIsInt = true
+			}
+
+			if parts[0] == "selected_contact_ids" || paramIsInt  {
 				_, err = strconv.Atoi(parts[1]) 
 				if err == nil {
 					ids = append(ids, parts[1])

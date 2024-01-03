@@ -10,14 +10,14 @@ templ ConfirmDelete(id string){
 }
 
 templ ConfirmDeletePopover(contact models.Contact){
-    <div>
+    
         <p>Really delete {contact.First} {contact.Last}?</p>
         <button hx-delete={fmt.Sprintf("/contacts/%v", contact.ID)} 
                 hx-target={fmt.Sprintf("#row-%v", contact.ID)}
-                id="delete-popover"
-                popovertarget="delete" popovertargetaction="hide">
+                id="delete-popover-btn"
+                popovertarget="delete-popover" popovertargetaction="hide">
                 Confirm
         </button>
-        <button popovertarget="delete" popovertargetaction="hide" >Cancel</button>
-    </div>
+        <button popovertarget="delete-popover" popovertargetaction="hide" >Cancel</button>
+    
 }

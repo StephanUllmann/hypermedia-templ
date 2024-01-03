@@ -19,7 +19,7 @@ templ Rows(contacts []models.Contact, page int) {
                          <div role="menu" hidden id={fmt.Sprintf("contact-menu-%v", contact.ID)}>
                             <a role="menuitem" href={templ.SafeURL(fmt.Sprintf("/contacts/%v/edit", contact.ID))} >Edit</a>
                             <a role="menuitem" href={templ.SafeURL(fmt.Sprintf("/contacts/%v", contact.ID))} >View</a>
-                            <button role="menuitem" class="inline-delete-btn"  hx-get={fmt.Sprintf("/contacts/confirm-delete-popover/%v", contact.ID)} hx-target="#delete" hx-swap="innerHTML" popovertarget="delete" popovertargetaction="show">Delete
+                            <button role="menuitem" class="inline-delete-btn"  hx-get={fmt.Sprintf("/contacts/confirm-delete-popover/%v", contact.ID)} hx-target="#delete-popover" hx-swap="innerHTML" popovertarget="delete-popover" popovertargetaction="show">Delete
                             </button>
                         </div>
                     </div>

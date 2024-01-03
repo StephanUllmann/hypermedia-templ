@@ -31,7 +31,7 @@ func Contacts(contacts []models.Contact, query string, page int, archiverStatus 
 				templ_7745c5c3_Buffer = templ.GetBuffer()
 				defer templ.ReleaseBuffer(templ_7745c5c3_Buffer)
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<header><search><form action=\"/contacts\" method=\"GET\"><input type=\"text\" name=\"q\" placeholder=\"Search\" id=\"search\" value=\"")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<header><search><form action=\"/contacts\" method=\"GET\"><input type=\"text\" name=\"q\" placeholder=\"Alt+S\" id=\"search\" value=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -39,30 +39,39 @@ func Contacts(contacts []models.Contact, query string, page int, archiverStatus 
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" hx-get=\"/contacts\" hx-trigger=\"search, keyup delay:500ms changed\" hx-target=\"tbody\" hx-select=\"tbody tr\" hx-push-url=\"true\" hx-indicator=\"#spinner\"> <img id=\"spinner\" class=\"htmx-indicator\" src=\"/public/loading-spinner.svg\" alt=\"Request In Flight...\"> <input type=\"submit\" value=\"Search\"></form></search><p><a class=\"add-contact\" href=\"/contacts/new\">")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" hx-get=\"/contacts\" hx-trigger=\"search, keyup delay:500ms changed\" hx-target=\"tbody\" hx-select=\"tbody tr\" hx-push-url=\"true\" hx-indicator=\"#spinner\" _=\"on keydown[altKey and code is &#39;KeyS&#39;] from the window\n                        me.focus()\"> <img id=\"spinner\" class=\"htmx-indicator\" src=\"/public/loading-spinner.svg\" alt=\"Request In Flight...\"> <button>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Var3 := `Add Contact `
+			templ_7745c5c3_Var3 := `Search`
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var3)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<span hx-get=\"/contacts/count\" hx-trigger=\"load\"><img class=\"htmx-indicator\" src=\"/public/loading-spinner.svg\" alt=\"Request In Flight...\"></span></a></p></header><form x-data=\"{ selected: [] }\"><div class=\"toolbar-wrapper\"><template x-if=\"selected.length &gt; 0\"><div class=\"box info tool-bar\"><slot x-text=\"selected.length\"></slot> ")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</button></form></search><p><a class=\"add-contact\" href=\"/contacts/new\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Var4 := `contacts selected`
+			templ_7745c5c3_Var4 := `Add Contact `
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var4)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" <button type=\"button\" class=\"bad bg color border\" @click=\"confirm(`Delete ${selected.length} contacts?`) &amp;&amp; \n                         htmx.ajax(&#39;DELETE&#39;, &#39;/contacts/bulk&#39;, { source: $root, target: document.body })\">")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<span hx-get=\"/contacts/count\" hx-trigger=\"load\"><img class=\"htmx-indicator\" src=\"/public/loading-spinner.svg\" alt=\"Request In Flight...\"></span></a></p></header><div class=\"container\" x-data=\"{ selected: [] }\"><div class=\"toolbar-wrapper\"><template x-if=\"selected.length &gt; 0\"><div><slot x-text=\"selected.length\"></slot> ")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Var5 := `Delete`
+			templ_7745c5c3_Var5 := `contacts selected`
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var5)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" <button @click=\"confirm(`Delete ${selected.length} contacts?`) &amp;&amp; \n                         htmx.ajax(&#39;DELETE&#39;, &#39;/contacts/bulk&#39;, { source: $root, target: document.body, values: selected })\">")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Var6 := `Delete`
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var6)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -70,8 +79,8 @@ func Contacts(contacts []models.Contact, query string, page int, archiverStatus 
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Var6 := `Cancel`
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var6)
+			templ_7745c5c3_Var7 := `Cancel`
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var7)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -79,16 +88,7 @@ func Contacts(contacts []models.Contact, query string, page int, archiverStatus 
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Var7 := `First`
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var7)
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</th><th>")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			templ_7745c5c3_Var8 := `Last`
+			templ_7745c5c3_Var8 := `First`
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var8)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
@@ -97,7 +97,7 @@ func Contacts(contacts []models.Contact, query string, page int, archiverStatus 
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Var9 := `Phone`
+			templ_7745c5c3_Var9 := `Last`
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var9)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
@@ -106,8 +106,17 @@ func Contacts(contacts []models.Contact, query string, page int, archiverStatus 
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Var10 := `Email`
+			templ_7745c5c3_Var10 := `Phone`
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var10)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</th><th>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Var11 := `Email`
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var11)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -119,16 +128,16 @@ func Contacts(contacts []models.Contact, query string, page int, archiverStatus 
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</tbody></table><button hx-delete=\"/contacts/bulk\" hx-confirm=\"Are you sure you want to delete these contacts?\" hx-target=\"body\" hx-include=\"[name=&#39;selected_contact_ids&#39;]\">")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</tbody></table><div class=\"bottom-menu\"><button hx-delete=\"/contacts/bulk\" hx-confirm=\"Are you sure you want to delete these contacts?\" hx-target=\"body\" hx-include=\"[name=&#39;selected_contact_ids&#39;]\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Var11 := `Delete Selected Contacts`
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var11)
+			templ_7745c5c3_Var12 := `Delete Selected Contacts`
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var12)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</button></form>          ")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</button>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -136,7 +145,7 @@ func Contacts(contacts []models.Contact, query string, page int, archiverStatus 
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" <div popover id=\"delete\"></div>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></div>          <div popover id=\"delete-popover\"></div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
