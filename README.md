@@ -22,3 +22,6 @@ Branch for [Chapter 6](https://github.com/bigskysoftware/hypermedia-systems/blob
 
 Branch for [Chapter 7](https://github.com/bigskysoftware/hypermedia-systems/blob/main/book/CH07_ADynamicArchiveUIWithhtmx.adoc) added a feature do download the full contacts archive as JSON file. It included a UI component for triggering the archiving, polling for a (mocked) progress of the archiving and at last swapping the progress bar again for a download link.
 Deployed on Render: https://hypermedia-chapter7.onrender.com
+
+Branch for [Chapter 9](https://github.com/bigskysoftware/hypermedia-systems/blob/main/book/CH09_ScriptingInAHypermediaApplication.adoc) explored three lightweight scripting approaches - plain JavaScript, Alpine.js and \_hyperscript to add finishing touches to the UX.
+Deployed on Render

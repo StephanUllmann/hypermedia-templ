@@ -5,10 +5,15 @@
 }
 
 body {
-  font-family: system-ui, sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   color-scheme: dark only;
   background-color: black;
   color: whitesmoke;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   min-height: 100dvh;
 }
 
@@ -24,6 +29,12 @@ header {
   align-items: center;
 }
 
+search input {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  border: none;
+}
+
 .add-contact {
   width: 14rem;
   display: block;
@@ -34,8 +45,22 @@ header {
   }
 }
 
+.container {
+  min-width: 50%;
+}
+
+.toolbar-wrapper {
+  min-height: 2rem;
+  margin-top: 1rem;
+
+  & button {
+    margin: 0 0.5rem;
+  }
+}
+
 table {
   margin: 2rem auto;
+  min-width: 50vh;
 }
 
 tr.htmx-swapping {
@@ -49,6 +74,23 @@ tr.htmx-swapping {
 td {
   border-spacing: 0.5rem 0.75rem;
   padding: 5px 7px;
+
+  & > div > button {
+    margin: 0;
+  }
+}
+
+[data-overflow-menu] {
+  position: relative;
+}
+[role='menu'] {
+  position: absolute;
+  left: 115%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+[role='menu']:not([hidden]) {
+  display: flex;
 }
 
 .contact {
@@ -57,7 +99,6 @@ td {
 }
 
 form {
-  /* align-self: stretch; */
   width: 700px;
 }
 
@@ -85,8 +126,11 @@ main > p {
 button {
   padding: 0.25rem 0.5rem;
   border-radius: 4px;
+  border: none;
   cursor: pointer;
-
+  background-color: #5c8bb5;
+  color: white;
+  transition: background-color 250ms ease-in-out;
   fieldset & {
     margin-top: 0.5rem;
   }
@@ -94,6 +138,10 @@ button {
   main & {
     margin: 1rem auto;
     text-align: center;
+  }
+
+  &:hover:is(:not(.inline-delete-btn)) {
+    background-color: #7ca9d1;
   }
 }
 
@@ -118,6 +166,7 @@ fieldset > p > span,
 
   &::backdrop {
     backdrop-filter: blur(3px) grayscale(0.7);
+    pointer-events: none;
   }
 }
 
@@ -204,11 +253,40 @@ a {
   background-color: transparent;
   border: none;
   cursor: pointer;
-  text-decoration: underline;
+  text-decoration: none;
   margin: 0;
   padding: 0;
-  color: #337ab7;
+  color: #7ca9d1;
   margin-right: 1rem;
   font-size: 1rem;
   font-family: inherit;
+  transition: color 250ms ease-in-out;
+
+  &:hover {
+    color: #5c8bb5;
+  }
+}
+
+.bottom-menu {
+  display: flex;
+  justify-content: space-between;
+  height: 2rem;
+  margin-bottom: 3rem;
+  align-items: center;
+
+  & button {
+    margin: 0;
+    height: 2rem;
+  }
+}
+
+footer {
+  font-size: 0.625rem;
+  margin: 1rem 3rem;
+  line-height: 1rem;
+  letter-spacing: 1px;
+  a {
+    font-size: inherit;
+    margin: 0;
+  }
 }

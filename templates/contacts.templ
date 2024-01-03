@@ -8,16 +8,18 @@ templ Contacts(contacts []models.Contact, query string, page int, archiverStatus
     <header>
         <search>
             <form action="/contacts" method="GET">
-                <input type="text" name="q" placeholder="Search" id="search"
+                <input type="text" name="q" placeholder="Alt+S" id="search"
                     value={query}
                     hx-get="/contacts" 
                     hx-trigger="search, keyup delay:500ms changed" 
                     hx-target="tbody"  
                     hx-select="tbody tr"
                     hx-push-url="true" 
-                    hx-indicator="#spinner"/>
+                    hx-indicator="#spinner"
+                    _="on keydown[altKey and code is 'KeyS'] from the window
+                        me.focus()"/>
                 <img id="spinner" class="htmx-indicator" src="/public/loading-spinner.svg" alt="Request In Flight..."/>
-                <input type="submit" value="Search" />
+                <button>Search</button>
             </form>
         </search>
         // <h2 id="spinner" class="htmx-indicator">Loading...</h2>
@@ -28,6 +30,20 @@ templ Contacts(contacts []models.Contact, query string, page int, archiverStatus
 
 
     </header>
+    <div class="container" x-data="{ selected: [] }">
+        <div class="toolbar-wrapper">
+            <template x-if="selected.length > 0">
+                <div >
+                    <slot x-text="selected.length"></slot>
+                    contacts selected
+                    <button 
+                     @click="confirm(`Delete ${selected.length} contacts?`) && 
+                         htmx.ajax('DELETE', '/contacts/bulk', { source: $root, target: document.body, values: selected })">Delete</button>
+                    // <hr aria-orientation="vertical">
+                    <button type="button" @click="selected = []">Cancel</button>
+                </div>
+            </template>
+        </div>
       <table>
         <thead>
         <tr>
@@ -39,12 +55,17 @@ templ Contacts(contacts []models.Contact, query string, page int, archiverStatus
         </tbody>
     </table>
 
-    <button hx-delete="/contacts/bulk"
-            hx-confirm="Are you sure you want to delete these contacts?"
-            hx-target="body"
-            hx-include="[name='selected_contact_ids']">
-                Delete Selected Contacts
-    </button>
+    <div class="bottom-menu">
+        <button hx-delete="/contacts/bulk"
+                hx-confirm="Are you sure you want to delete these contacts?"
+                hx-target="body"
+                hx-include="[name='selected_contact_ids']">
+                    Delete Selected Contacts
+        </button>
+            @Archive_UI(archiverStatus, archiverProgress, archiveProgressWidth)
+        
+    </div> 
+    </div>
 // Pagination
     // <div class="pagination">
     //         if page > 1 {
@@ -56,9 +77,8 @@ templ Contacts(contacts []models.Contact, query string, page int, archiverStatus
     //         }
     // </div>
 
-    @Archive_UI(archiverStatus, archiverProgress, archiveProgressWidth)
 
-    <div popover id="delete">
+    <div popover id="delete-popover">
        
     </div>
 
