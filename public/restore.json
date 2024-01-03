@@ -1,0 +1,163 @@
+[
+  {
+    "id": 1,
+    "first": "Stephan",
+    "last": "Ullmann",
+    "phone": "238573495",
+    "email": "stephan.ullmann@posteo.de"
+  },
+  {
+    "id": 3,
+    "first": "Guybrush",
+    "last": "Threepwood",
+    "phone": "0000000000",
+    "email": "mighty@pirate.com"
+  },
+  {
+    "id": 4,
+    "first": "Severus",
+    "last": "Snape",
+    "phone": "00666000666",
+    "email": "halfbloodprince@slytherin.ac.uk"
+  },
+  {
+    "id": 6,
+    "first": "Hermione",
+    "last": "Granger",
+    "phone": "555-1234",
+    "email": " hermione.granger@magicmail.com"
+  },
+  {
+    "id": 12,
+    "first": "Gandalf",
+    "last": "the Grey",
+    "phone": "555-3210",
+    "email": "olorin@maia.net"
+  },
+  {
+    "id": 14,
+    "first": "Arwen",
+    "last": "Undomiel",
+    "phone": "555-3456",
+    "email": "arwen.starlight@email.com"
+  },
+  {
+    "id": 15,
+    "first": "Nymphadora",
+    "last": "Tonks",
+    "phone": "555-8901",
+    "email": "tonks.metamorphmagus@gmail.com"
+  },
+  {
+    "id": 17,
+    "first": "Sirius",
+    "last": "Black",
+    "phone": "555-9876",
+    "email": "sirius.padfoot@animagus.net"
+  },
+  {
+    "id": 18,
+    "first": "Luna",
+    "last": "Lovegood",
+    "phone": "555-5678",
+    "email": "luna.loony@quirkymail.com"
+  },
+  {
+    "id": 19,
+    "first": "Remus",
+    "last": "Lupin",
+    "phone": "555-8765",
+    "email": "remus.werewolf@moonmail.com"
+  },
+  {
+    "id": 20,
+    "first": "Morgoth",
+    "last": "Bauglir",
+    "phone": "555-9876",
+    "email": "darklord@angband.com"
+  },
+  {
+    "id": 21,
+    "first": "Fëanor",
+    "last": " ",
+    "phone": "555-1234",
+    "email": "feanor.silmaril@noldor.com"
+  },
+  {
+    "id": 22,
+    "first": "Goldberry",
+    "last": " ",
+    "phone": "555-8888",
+    "email": "riverdaughter@withywindle.net"
+  },
+  {
+    "id": 23,
+    "first": "Tom",
+    "last": "Bombadil",
+    "phone": "555-7777",
+    "email": "tom@oldforest.com"
+  },
+  {
+    "id": 24,
+    "first": "Turin",
+    "last": "Turambar",
+    "phone": "555-7890",
+    "email": "turin.turambar@gondolin.net"
+  },
+  {
+    "id": 25,
+    "first": "Finrod",
+    "last": "Felagund",
+    "phone": "555-8765",
+    "email": "finrod.noldor@nargothrond.net"
+  },
+  {
+    "id": 26,
+    "first": "Luthien",
+    "last": "Tinuviel",
+    "phone": "555-5678",
+    "email": "luthien.songstress@beleriand.net"
+  },
+  {
+    "id": 27,
+    "first": "Ungoliant",
+    "last": " ",
+    "phone": "555-9999",
+    "email": "dark@void.net"
+  },
+  {
+    "id": 28,
+    "first": "Elaine",
+    "last": "Marley",
+    "phone": "555-5555",
+    "email": "governor.marley@email.com"
+  },
+  {
+    "id": 29,
+    "first": "Samwise",
+    "last": "Gamgee",
+    "phone": "555-0981",
+    "email": "sam@shiremail.com"
+  },
+  {
+    "id": 30,
+    "first": "Frodo",
+    "last": "Baggins",
+    "phone": "555-5742",
+    "email": "ringbearer@shiremail.com"
+  },
+  {
+    "id": 31,
+    "first": "Ron",
+    "last": "Weasley",
+    "phone": "555-8924",
+    "email": "gingerwizard@owlpost.net"
+  },
+  {
+    "id": 32,
+    "first": "Albus",
+    "last": "Dumbledore",
+    "phone": "555-1234",
+    "email": "albus.dumbledore@hogwarts.edu"
+  }
+]

@@ -2,10 +2,12 @@ package controllers
 
 import (
 	"database/sql"
+	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
 	"net/mail"
+	"os"
 	"strconv"
 	"strings"
 	"time"
@@ -266,4 +268,31 @@ func ConfirmDeleteContactPopover(w http.ResponseWriter, r *http.Request) {
 		default:
 			panic(err)
 	}
+}
+
+func RestoreDB(w http.ResponseWriter, r *http.Request) {
+	
+	contacts, err := os.ReadFile("public/restore.json")
+	if err != nil {
+		fmt.Println(err)
+	}
+	var data []models.Contact
+	err = json.Unmarshal(contacts, &data)
+	if err != nil {
+		fmt.Println(err)
+	}
+	_, err = db.DB.Exec("DELETE FROM contacts;")
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	for _, contact := range data {
+		_, err = db.DB.Exec("INSERT INTO contacts (first, last, email, phone) VALUES (?, ?, ?, ?);", contact.First, contact.Last, contact.Email, contact.Phone)
+		if err != nil {
+			fmt.Println(err)
+		}
+	}
+
+
+	http.Redirect(w, r, "/contacts", http.StatusSeeOther)
 }
