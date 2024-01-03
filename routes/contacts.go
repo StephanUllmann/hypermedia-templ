@@ -40,7 +40,7 @@ func ContactsRouter() chi.Router {
 		r.Get("/archive/file", controllers.ArchiveDownload)
 
 		// Restore DB
-		r.Post("/restore", controllers.RestoreDB)
+		r.Get("/restore", controllers.RestoreDB)
 		
 
 	return r

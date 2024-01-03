@@ -272,7 +272,7 @@ func ConfirmDeleteContactPopover(w http.ResponseWriter, r *http.Request) {
 
 func RestoreDB(w http.ResponseWriter, r *http.Request) {
 	
-	contacts, err := os.ReadFile("public/contacts.json")
+	contacts, err := os.ReadFile("public/restore.json")
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -292,7 +292,7 @@ func RestoreDB(w http.ResponseWriter, r *http.Request) {
 			fmt.Println(err)
 		}
 	}
-	
+
 
 	http.Redirect(w, r, "/contacts", http.StatusSeeOther)
 }
