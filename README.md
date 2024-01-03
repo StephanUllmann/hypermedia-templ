@@ -24,4 +24,4 @@ Branch for [Chapter 7](https://github.com/bigskysoftware/hypermedia-systems/blob
 Deployed on Render: https://hypermedia-chapter7.onrender.com
 
 Branch for [Chapter 9](https://github.com/bigskysoftware/hypermedia-systems/blob/main/book/CH09_ScriptingInAHypermediaApplication.adoc) explored three lightweight scripting approaches - plain JavaScript, Alpine.js and \_hyperscript to add finishing touches to the UX.
-Deployed on Render
+Deployed on Render: https://hypermedia-contacts.onrender.com/contacts
