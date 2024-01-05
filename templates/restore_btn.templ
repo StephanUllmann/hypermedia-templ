@@ -1,0 +1,12 @@
+package templates
+
+import "fmt"
+
+templ RestoreBtn(count int) {
+  <span>{fmt.Sprintf("(%v total Contacts)", count)}</span>
+
+  <div hx-swap-oob="afterend:table" >
+    <button hx-get="contacts/restore" hx-target="body" hx-indicator="#restore-spinner">Demo emptied out? Click here to restore.</button>
+    <img id="restore-spinner" class="htmx-indicator" src="/public/loading-spinner.svg" alt="Request In Flight..."/>
+  </div>
+}

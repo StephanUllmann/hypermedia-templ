@@ -74,14 +74,18 @@ func GetContacts(w http.ResponseWriter, r *http.Request) {
 
 // For Lazy Loading Route
 func GetContactCount(w http.ResponseWriter, r *http.Request) {
-	time.Sleep(1 * time.Second) // simulate slow response (for demo purposes only!
 	var count int
 	row := db.DB.QueryRow("SELECT COUNT(*) FROM contacts;")
 	switch err := row.Scan(&count); err {
 	case sql.ErrNoRows:
 		fmt.Println("No rows were returned!")
 	case nil:
-		w.Write([]byte(fmt.Sprintf("(%v total Contacts)", count)))
+		if count < 11 {
+			templates.RestoreBtn(count).Render(r.Context(), w)
+			} else {
+			time.Sleep(1 * time.Second) // simulate slow response (for demo purposes only!)
+			w.Write([]byte(fmt.Sprintf("(%v total Contacts)", count)))
+		}
 	default:
 		panic(err)
 	}
@@ -293,6 +297,61 @@ func RestoreDB(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+
+	http.Redirect(w, r, "/contacts", http.StatusSeeOther)
+}
+
+func ConfirmBulkPopover(w http.ResponseWriter, r *http.Request) {
+	body, err := io.ReadAll(r.Body)
+	if err != nil {
+			fmt.Println(err)
+	}
+	pairs := strings.Split(string(body), "&")
+
+	var ids []string
+	for _, pair := range pairs {
+		parts := strings.Split(pair, "=")
+
+		var paramIsInt bool
+		_, err = strconv.Atoi(parts[0])
+		if err == nil {
+			paramIsInt = true
+		}
+
+		if parts[0] == "selected_contact_ids" || paramIsInt  {
+			_, err = strconv.Atoi(parts[1]) 
+			if err == nil {
+				ids = append(ids, parts[1])
+			}
+		}
+	}
+
+	idString := strings.Join(ids, ",")
+
+	templates.ConfirmBulkDeletePopover(len(ids), idString).Render(r.Context(), w)
+}
+
+func DeleteConfirmedContacts(w http.ResponseWriter, r *http.Request) {
+	ids := r.URL.Query().Get("d")
+	
+	idSlice := strings.Split(ids, ",")
+
+	var sanitizedIds []string
+
+	for _, id := range idSlice {
+		_, err := strconv.Atoi(id)
+		if err == nil {
+			sanitizedIds = append(sanitizedIds, id)
+		}
+	}
+	fmt.Println(sanitizedIds)
+
+	query := "(" + strings.Join(sanitizedIds, ", ") + ")"
+
+	_, err := db.DB.Exec("DELETE FROM contacts WHERE id IN " + query + ";")
+	if err != nil {
+		fmt.Println(err)
+	}
 
 	http.Redirect(w, r, "/contacts", http.StatusSeeOther)
 }

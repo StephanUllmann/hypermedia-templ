@@ -128,7 +128,7 @@ func Contacts(contacts []models.Contact, query string, page int, archiverStatus 
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</tbody></table><div class=\"bottom-menu\"><button hx-delete=\"/contacts/bulk\" hx-confirm=\"Are you sure you want to delete these contacts?\" hx-target=\"body\" hx-include=\"[name=&#39;selected_contact_ids&#39;]\">")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</tbody></table><div class=\"bottom-menu\"><button hx-post=\"/contacts/confirm-bulk-delete\" hx-target=\"#delete-popover\" hx-swap=\"innerHTML\" popovertarget=\"delete-popover\" popovertargetaction=\"show\" hx-include=\"[name=&#39;selected_contact_ids&#39;]\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
