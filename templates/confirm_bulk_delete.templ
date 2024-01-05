@@ -1,0 +1,14 @@
+package templates
+
+import "fmt"
+
+templ ConfirmBulkDeletePopover(count int, idString string) {
+  <p>Really delete {fmt.Sprintf("%d", count)} contacts?</p>
+  <button hx-delete={fmt.Sprintf("/contacts/popover-bulk?d=%v", idString)}
+          id="delete-popover-btn"
+          hx-target="body"
+          popovertarget="delete-popover" popovertargetaction="hide">
+          Confirm
+  </button>
+  <button popovertarget="delete-popover" popovertargetaction="hide" >Cancel</button>
+}

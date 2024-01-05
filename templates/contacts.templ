@@ -55,13 +55,24 @@ templ Contacts(contacts []models.Contact, query string, page int, archiverStatus
         </tbody>
     </table>
 
+// <button role="menuitem" class="inline-delete-btn"  hx-get={fmt.Sprintf("/contacts/confirm-delete-popover/%v", contact.ID)} hx-target="#delete-popover" hx-swap="innerHTML" popovertarget="delete-popover" popovertargetaction="show">Delete
+//                             </button>
+
     <div class="bottom-menu">
-        <button hx-delete="/contacts/bulk"
-                hx-confirm="Are you sure you want to delete these contacts?"
-                hx-target="body"
+        <button hx-post="/contacts/confirm-bulk-delete"
+                hx-target="#delete-popover"
+                hx-swap="innerHTML"
+                popovertarget="delete-popover"
+                popovertargetaction="show"
                 hx-include="[name='selected_contact_ids']">
                     Delete Selected Contacts
         </button>
+        // <button hx-delete="/contacts/bulk"
+        //         hx-confirm="Are you sure you want to delete these contacts?"
+        //         hx-target="body"
+        //         hx-include="[name='selected_contact_ids']">
+        //             Delete Selected Contacts
+        // </button>
             @Archive_UI(archiverStatus, archiverProgress, archiveProgressWidth)
         
     </div> 

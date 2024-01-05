@@ -47,6 +47,9 @@ search input {
 
 .container {
   min-width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .toolbar-wrapper {
@@ -271,6 +274,7 @@ a {
   display: flex;
   justify-content: space-between;
   height: 2rem;
+  min-width: 100%;
   margin-bottom: 3rem;
   align-items: center;
 
