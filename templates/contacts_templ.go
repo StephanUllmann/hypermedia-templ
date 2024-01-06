@@ -39,7 +39,7 @@ func Contacts(contacts []models.Contact, query string, page int, archiverStatus 
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" hx-get=\"/contacts\" hx-trigger=\"search, keyup delay:250ms changed\" hx-target=\"tbody\" hx-select=\"tbody\" hx-swap=\"outerHTML transition:true\" hx-push-url=\"true\" hx-indicator=\"#spinner\"> <img id=\"spinner\" class=\"htmx-indicator\" src=\"/public/loading-spinner.svg\" alt=\"Request In Flight...\"> <button>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" hx-get=\"/contacts\" hx-trigger=\"search, keyup delay:250ms changed\" hx-target=\"tbody\" hx-select=\"tbody\" hx-swap=\"outerHTML transition:true\" hx-push-url=\"true\" hx-indicator=\"#spinner\" _=\"on keydown[altKey and code is &#39;KeyS&#39;] from the window\n                    me.focus()\"> <img id=\"spinner\" class=\"htmx-indicator\" src=\"/public/loading-spinner.svg\" alt=\"Request In Flight...\"> <button>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
