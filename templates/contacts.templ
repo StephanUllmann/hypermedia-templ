@@ -16,7 +16,9 @@ templ Contacts(contacts []models.Contact, query string, page int, archiverStatus
                     hx-select="tbody"
                     hx-swap="outerHTML transition:true"
                     hx-push-url="true" 
-                    hx-indicator="#spinner"/>
+                    hx-indicator="#spinner"
+                    _="on keydown[altKey and code is 'KeyS'] from the window
+                    me.focus()"/>
                 <img id="spinner" class="htmx-indicator" src="/public/loading-spinner.svg" alt="Request In Flight..."/>
                 <button>Search</button>
             </form>
