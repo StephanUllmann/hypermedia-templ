@@ -3,7 +3,7 @@ package templates
 import "github.com/StephanUllmann/hypermedia-templ/model"
 
 
-templ Contacts(contacts []models.Contact, query string, page int, archiverStatus string, archiverProgress float64, archiveProgressWidth templ.Attributes) {
+templ Contacts(contacts []models.Contact, query string, page int, archiverStatus string, archiverProgress float64, archiveProgressWidth templ.Attributes, transitionNames []templ.Attributes) {
   @Layout("Contacts"){
     <header>
         <search>
@@ -11,13 +11,12 @@ templ Contacts(contacts []models.Contact, query string, page int, archiverStatus
                 <input type="text" name="q" placeholder="Alt+S" id="search"
                     value={query}
                     hx-get="/contacts" 
-                    hx-trigger="search, keyup delay:500ms changed" 
+                    hx-trigger="search, keyup delay:250ms changed" 
                     hx-target="tbody"  
-                    hx-select="tbody tr"
+                    hx-select="tbody"
+                    hx-swap="outerHTML transition:true"
                     hx-push-url="true" 
-                    hx-indicator="#spinner"
-                    _="on keydown[altKey and code is 'KeyS'] from the window
-                        me.focus()"/>
+                    hx-indicator="#spinner"/>
                 <img id="spinner" class="htmx-indicator" src="/public/loading-spinner.svg" alt="Request In Flight..."/>
                 <button>Search</button>
             </form>
@@ -51,7 +50,7 @@ templ Contacts(contacts []models.Contact, query string, page int, archiverStatus
         </tr>
         </thead>
         <tbody>
-            @Rows(contacts, page)
+            @Rows(contacts, page, transitionNames)
         </tbody>
     </table>
 
@@ -61,7 +60,7 @@ templ Contacts(contacts []models.Contact, query string, page int, archiverStatus
     <div class="bottom-menu">
         <button hx-post="/contacts/confirm-bulk-delete"
                 hx-target="#delete-popover"
-                hx-swap="innerHTML"
+                hx-swap="innerHTML transition:true"
                 popovertarget="delete-popover"
                 popovertargetaction="show"
                 hx-include="[name='selected_contact_ids']">
@@ -95,3 +94,7 @@ templ Contacts(contacts []models.Contact, query string, page int, archiverStatus
 
   }
 }
+
+
+// _="on keydown[altKey and code is 'KeyS'] from the window
+//     me.focus()"

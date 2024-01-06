@@ -12,7 +12,7 @@ import "bytes"
 
 import "github.com/StephanUllmann/hypermedia-templ/model"
 
-func Contacts(contacts []models.Contact, query string, page int, archiverStatus string, archiverProgress float64, archiveProgressWidth templ.Attributes) templ.Component {
+func Contacts(contacts []models.Contact, query string, page int, archiverStatus string, archiverProgress float64, archiveProgressWidth templ.Attributes, transitionNames []templ.Attributes) templ.Component {
 	return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
 		if !templ_7745c5c3_IsBuffer {
@@ -39,7 +39,7 @@ func Contacts(contacts []models.Contact, query string, page int, archiverStatus 
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" hx-get=\"/contacts\" hx-trigger=\"search, keyup delay:500ms changed\" hx-target=\"tbody\" hx-select=\"tbody tr\" hx-push-url=\"true\" hx-indicator=\"#spinner\" _=\"on keydown[altKey and code is &#39;KeyS&#39;] from the window\n                        me.focus()\"> <img id=\"spinner\" class=\"htmx-indicator\" src=\"/public/loading-spinner.svg\" alt=\"Request In Flight...\"> <button>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" hx-get=\"/contacts\" hx-trigger=\"search, keyup delay:250ms changed\" hx-target=\"tbody\" hx-select=\"tbody\" hx-swap=\"outerHTML transition:true\" hx-push-url=\"true\" hx-indicator=\"#spinner\"> <img id=\"spinner\" class=\"htmx-indicator\" src=\"/public/loading-spinner.svg\" alt=\"Request In Flight...\"> <button>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -124,11 +124,11 @@ func Contacts(contacts []models.Contact, query string, page int, archiverStatus 
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = Rows(contacts, page).Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = Rows(contacts, page, transitionNames).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</tbody></table><div class=\"bottom-menu\"><button hx-post=\"/contacts/confirm-bulk-delete\" hx-target=\"#delete-popover\" hx-swap=\"innerHTML\" popovertarget=\"delete-popover\" popovertargetaction=\"show\" hx-include=\"[name=&#39;selected_contact_ids&#39;]\">")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</tbody></table><div class=\"bottom-menu\"><button hx-post=\"/contacts/confirm-bulk-delete\" hx-target=\"#delete-popover\" hx-swap=\"innerHTML transition:true\" popovertarget=\"delete-popover\" popovertargetaction=\"show\" hx-include=\"[name=&#39;selected_contact_ids&#39;]\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -164,3 +164,6 @@ func Contacts(contacts []models.Contact, query string, page int, archiverStatus 
 		return templ_7745c5c3_Err
 	})
 }
+
+// _="on keydown[altKey and code is 'KeyS'] from the window
+//     me.focus()"

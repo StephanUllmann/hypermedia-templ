@@ -3,11 +3,11 @@ package templates
 import "github.com/StephanUllmann/hypermedia-templ/model"
 import "fmt"
 
-templ Rows(contacts []models.Contact, page int) {
-  for _, contact := range contacts {
-            <tr id={fmt.Sprintf("row-%v", contact.ID)}>
+templ Rows(contacts []models.Contact, page int, transitionNames []templ.Attributes) {
+  for i, contact := range contacts {
+            <tr id={fmt.Sprintf("row-%v", contact.ID)} {transitionNames[i]...} >
                 <td><input type="checkbox" name="selected_contact_ids" value={ fmt.Sprintf("%d",contact.ID) } x-model="selected"/></td>
-                <td>{ contact.First	 }</td>
+                <td>{ contact.First }</td>
                 <td>{ contact.Last }</td>
                 <td>{ contact.Phone }</td>
                 <td>{ contact.Email }</td>
@@ -17,8 +17,8 @@ templ Rows(contacts []models.Contact, page int) {
                             aria-controls={fmt.Sprintf("contact-menu-%v", contact.ID)}
                             >Options</button>
                          <div role="menu" hidden id={fmt.Sprintf("contact-menu-%v", contact.ID)}>
-                            <a role="menuitem" href={templ.SafeURL(fmt.Sprintf("/contacts/%v/edit", contact.ID))} >Edit</a>
-                            <a role="menuitem" href={templ.SafeURL(fmt.Sprintf("/contacts/%v", contact.ID))} >View</a>
+                            <a role="menuitem" href={templ.SafeURL(fmt.Sprintf("/contacts/%v/edit", contact.ID))} hx-swap="innerHTML transiton:true" hx-target="body" >Edit</a>
+                            <a role="menuitem" href={templ.SafeURL(fmt.Sprintf("/contacts/%v", contact.ID))} hx-swap="innerHTML transiton:true" hx-target="body" >View</a>
                             <button role="menuitem" class="inline-delete-btn"  hx-get={fmt.Sprintf("/contacts/confirm-delete-popover/%v", contact.ID)} hx-target="#delete-popover" hx-swap="innerHTML" popovertarget="delete-popover" popovertargetaction="show">Delete
                             </button>
                         </div>
@@ -34,33 +34,33 @@ templ Rows(contacts []models.Contact, page int) {
             //     hx-target="closest tr">Delete
             //     </a>
 
-            // Click to Load
-            // if len(contacts) == 10 {
-            //     <tr>
-            //         <td colspan="5" style="text-align: center">
-            //             <button hx-target="closest tr"
-            //                     hx-swap="outerHTML"
-            //                     hx-select="tbody > tr"
-            //                     hx-get={fmt.Sprintf("/contacts?page=%d", page + 1)}
-            //                     >
-            //                 Load More
-            //             </button>
-            //         </td>
-            //     </tr>              
-            // }
-
-            // Infinite Scroll
+            Click to Load
             if len(contacts) == 10 {
                 <tr>
                     <td colspan="5" style="text-align: center">
-                        <span hx-target="closest tr"
-                            hx-trigger="revealed"
-                            hx-swap="outerHTML"
-                            hx-select="tbody > tr"
-                            hx-get={fmt.Sprintf("/contacts?page=%d", page + 1)}>Loading More...</span>
+                        <button hx-target="closest tr"
+                                hx-swap="outerHTML transition:true"
+                                hx-select="tbody > tr"
+                                hx-get={fmt.Sprintf("/contacts?page=%d", page + 1)}
+                                >
+                            Load More
+                        </button>
                     </td>
-                </tr>
+                </tr>              
             }
+
+            // Infinite Scroll
+            // if len(contacts) == 10 {
+            //     <tr>
+            //         <td colspan="5" style="text-align: center">
+            //             <span hx-target="closest tr"
+            //                 hx-trigger="revealed"
+            //                 hx-swap="outerHTML transition:true"
+            //                 hx-select="tbody > tr"
+            //                 hx-get={fmt.Sprintf("/contacts?page=%d", page + 1)}>Loading More...</span>
+            //         </td>
+            //     </tr>
+            // }
 }
 
 // confirmation dialog
