@@ -3,10 +3,10 @@ package templates
 import "github.com/StephanUllmann/hypermedia-templ/model"
 import "fmt"
 
-templ Contact(contact models.Contact) {
+templ Contact(contact models.Contact, transitionFirstStyle templ.Attributes, transitionLastStyle templ.Attributes) {
   @Layout(fmt.Sprintf("%s %s", contact.First, contact.Last)) {
       <div class="contact">
-        <h1>{contact.First} {contact.Last}</h1>
+        <h1><span {transitionFirstStyle...}>{contact.First}</span> <span {transitionLastStyle...}>{contact.Last}</span></h1>
         <div>
           <div>Phone: {contact.Phone}</div>
           <div>Email: {contact.Email}</div>

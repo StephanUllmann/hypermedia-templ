@@ -56,20 +56,28 @@ func GetContacts(w http.ResponseWriter, r *http.Request) {
 		}
 		data = append(data, contact)
 	}
-
 	
+	var transitionNamesRows []templ.Attributes
 
-	trigger := r.Header.Get("Hx-Trigger")
-	if trigger == "search" {
-		templates.Rows(data, page).Render(r.Context(), w)
-	} else {
-		utils.A.Init()
-		progressWidth := "width:0%;"
-		archiveProgressWidth := templ.Attributes{"style": progressWidth }
-		archiverStatus := utils.A.GetStatus()
-		archiverProgress := utils.A.GetProgress()
-		templates.Contacts(data, q, page, archiverStatus, archiverProgress, archiveProgressWidth).Render(r.Context(), w)
+	for _, contact := range data {
+		transitionRow := fmt.Sprintf("view-transition-name:row-%d;", contact.ID)
+		transitionRowStyle := templ.Attributes{"style": transitionRow}
+		transitionNamesRows = append(transitionNamesRows, transitionRowStyle)
 	}
+	
+	utils.A.Init()
+	progressWidth := "width:0%;"
+	archiveProgressWidth := templ.Attributes{"style": progressWidth }
+	archiverStatus := utils.A.GetStatus()
+	archiverProgress := utils.A.GetProgress()
+
+	// trigger := r.Header.Get("Hx-Trigger")
+	// if trigger == "search" {
+		// templates.Rows(data, page, transitionNamesRows).Render(r.Context(), w)
+		templates.Contacts(data, q, page, archiverStatus, archiverProgress, archiveProgressWidth, transitionNamesRows).Render(r.Context(), w)
+	// } else {
+	// 	templates.Contacts(data, q, page, archiverStatus, archiverProgress, archiveProgressWidth, transitionNamesRows).Render(r.Context(), w)
+	// }
 }
 
 // For Lazy Loading Route
@@ -103,7 +111,11 @@ func GetContact(w http.ResponseWriter, r *http.Request) {
 			fmt.Println("No rows were returned!")
 		case nil:
 			fmt.Printf("Data: %v\n", data)
-			templates.Contact(data).Render(r.Context(), w)
+			transitionFirst := fmt.Sprintf("view-transition-name:first-%v;", id)
+			transitionLast := fmt.Sprintf("view-transition-name:last-%v;", id)
+			transitionFirstStyle := templ.Attributes{"style": transitionFirst}
+			transitionLastStyle := templ.Attributes{"style": transitionLast}
+			templates.Contact(data, transitionFirstStyle, transitionLastStyle).Render(r.Context(), w)
 		default:
 			panic(err)
 		}
@@ -137,7 +149,11 @@ func GetEditContact(w http.ResponseWriter, r *http.Request) {
 		case sql.ErrNoRows:
 			fmt.Println("No rows were returned!")
 		case nil:
-			templates.EditContact(data).Render(r.Context(), w)
+			transitionFirst := fmt.Sprintf("view-transition-name:first-%d;", data.ID)
+			transitionLast := fmt.Sprintf("view-transition-name:last-%d;", data.ID)
+			transitionFirstStyle := templ.Attributes{"style": transitionFirst}
+			transitionLastStyle := templ.Attributes{"style": transitionLast}
+			templates.EditContact(data, transitionFirstStyle, transitionLastStyle).Render(r.Context(), w)
 		default:
 			panic(err)
 		}
@@ -155,7 +171,11 @@ func PostEditContact(w http.ResponseWriter, r *http.Request) {
 	_, err := db.DB.Exec("UPDATE contacts SET first = ?, last = ?, email = ?, phone = ? WHERE id = ?;", contact.First, contact.Last, contact.Email, contact.Phone, id)
 	if err != nil {
 		fmt.Println(err)
-		templates.EditContact(models.Contact{}).Render(r.Context(), w)
+		transitionFirst := fmt.Sprintf("view-transition-name:first-%v;", id)
+		transitionLast := fmt.Sprintf("view-transition-name:last-%v;", id)
+		transitionFirstStyle := templ.Attributes{"style": transitionFirst}
+		transitionLastStyle := templ.Attributes{"style": transitionLast}
+		templates.EditContact(models.Contact{}, transitionFirstStyle, transitionLastStyle).Render(r.Context(), w)
 	}
 	http.Redirect(w, r, fmt.Sprintf("/contacts/%v", id), http.StatusSeeOther)
 }

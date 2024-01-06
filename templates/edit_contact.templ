@@ -3,7 +3,7 @@ package templates
 import "github.com/StephanUllmann/hypermedia-templ/model"
 import "fmt"
 
-templ EditContact(contact models.Contact) {
+templ EditContact(contact models.Contact, transitionNameFirst templ.Attributes, transitionNameLast templ.Attributes) {
   @Layout(fmt.Sprintf("Edit %s", contact.First)) {
         <form action={templ.SafeURL(fmt.Sprintf("/contacts/%v/edit", contact.ID))} method="post" >
           @FieldsetContact(contact)

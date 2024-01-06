@@ -15,6 +15,7 @@ templ ConfirmDeletePopover(contact models.Contact){
         <button hx-delete={fmt.Sprintf("/contacts/%v", contact.ID)} 
                 hx-target={fmt.Sprintf("#row-%v", contact.ID)}
                 id="delete-popover-btn"
+                hx-swap="outerHTML transition:true"
                 popovertarget="delete-popover" popovertargetaction="hide">
                 Confirm
         </button>
