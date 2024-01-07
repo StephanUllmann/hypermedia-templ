@@ -63,7 +63,8 @@ search input {
 
 table {
   margin: 2rem auto;
-  min-width: 50vh;
+  width: 42rem;
+  /* table-layout: fixed; */
 }
 
 tr.htmx-swapping {
@@ -83,6 +84,28 @@ td {
   }
 }
 
+tr td {
+  table-layout: fixed;
+
+  &:nth-of-type(1) {
+    width: 2rem;
+  }
+  &:nth-of-type(2) {
+    width: 4rem;
+  }
+  &:nth-of-type(3) {
+    width: 4rem;
+  }
+  &:nth-of-type(4) {
+    width: 7rem;
+  }
+  &:nth-of-type(5) {
+    width: 20rem;
+  }
+  &:nth-of-type(6) {
+    width: 4rem;
+  }
+}
 [data-overflow-menu] {
   position: relative;
 }
